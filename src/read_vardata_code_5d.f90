@@ -45,7 +45,6 @@
   n4 = dset%variables(nvar)%dimlens(4)
   n5 = dset%variables(nvar)%dimlens(5)
   ! allocate/deallocate values
-  if (allocated(values)) deallocate(values)
   allocate(start(dset%variables(nvar)%ndims),count(dset%variables(nvar)%ndims))
   start(:) = 1; count(1)=n1; count(2)=n2; count(3)=n3; count(4)=n4; count(5)=n5
   if (present(ncstart) .and. present(nccount)) then
@@ -60,6 +59,7 @@
   allocate(values(count(1),count(2),count(3),count(4),count(5)))
   ncerr = nf90_get_var(dset%ncid, dset%variables(nvar)%varid, values,&
                        start,count)
+  deallocate(start,count)
   ! err check
   if (return_errcode) then
      call nccheck(ncerr,halt=.false.)

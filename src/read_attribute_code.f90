@@ -30,7 +30,6 @@
   else
      call nccheck(ncerr)
   endif
-  if (allocated(values)) deallocate(values)
   allocate(values(nlen))
   ncerr = nf90_get_att(dset%ncid, varid, trim(attname), values)
   ! err check

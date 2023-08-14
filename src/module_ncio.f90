@@ -61,7 +61,7 @@ module module_ncio
   !! @param[in] dset Input dataset instance returned by
   !! open_dataset/create_dataset.
   !! @param[in] varname Input string name of variable.
-  !! @param[inout] values Array to hold variable data. Must be an allocatable
+  !! @param[out] values Array to hold variable data. Must be an allocatable
   !! array with same rank as variable varname (or 1 dimension less).
   !! @param[in] nslice optional index along dimension slicedim
   !! @param[in] slicedim optional, if nslice is set, index of which
@@ -79,7 +79,7 @@ module module_ncio
   !! @param[in] dset Input dataset instance returned by
   !! open_dataset/create_dataset.
   !! @param[in] varname Input string name of variable.
-  !! @param[inout] values Array to hold variable data. Must be an allocatable
+  !! @param[out] values Array to hold variable data. Must be an allocatable
   !! array with same rank as variable varname (or 1 dimension less).
   !! @param[out] errcode optional error return code. If not specified,
   !! program will stop if a nonzero error code returned from netcdf
@@ -148,7 +148,7 @@ module module_ncio
   !!
   !! @param[in] dset Input dataset instance returned by open_dataset/create_dataset.
   !! @param[in] attname Input string name of attribute to read.
-  !! @param[inout] values Array with attribute data. Must be an allocatable
+  !! @param[out] values Array with attribute data. Must be an allocatable
   !! array with same rank as attribute attname.
   !! @param[in] varname optional, if provided, attribute will be read from variable
   !! varname, otherwise attribute will be assumed to be a global attribute.
@@ -171,7 +171,7 @@ module module_ncio
   !!
   !! @param[in] dset Input dataset instance returned by open_dataset/create_dataset.
   !! @param[in] attname Input string name of attribute to write.
-  !! @param[inout] values Array with attribute data. Must be an allocatable
+  !! @param[out] values Array with attribute data. Must be an allocatable
   !! array with same rank as attribute attname.
   !! @param[in] varname optional, if provided, attribute will be written to variable
   !! varname, otherwise attribute will be assumed to be a global attribute.
@@ -936,181 +936,181 @@ contains
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_1d_r4(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(4), allocatable, dimension(:), intent(inout) :: values
+    real(4), allocatable, dimension(:), intent(out) :: values
     include "read_vardata_code_1d.f90"
   end subroutine read_vardata_1d_r4
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_2d_r4(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(4), allocatable, dimension(:,:), intent(inout) :: values
+    real(4), allocatable, dimension(:,:), intent(out) :: values
     include "read_vardata_code_2d.f90"
   end subroutine read_vardata_2d_r4
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_3d_r4(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(4), allocatable, dimension(:,:,:), intent(inout) :: values
+    real(4), allocatable, dimension(:,:,:), intent(out) :: values
     include "read_vardata_code_3d.f90"
   end subroutine read_vardata_3d_r4
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_4d_r4(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(4), allocatable, dimension(:,:,:,:), intent(inout) :: values
+    real(4), allocatable, dimension(:,:,:,:), intent(out) :: values
     include "read_vardata_code_4d.f90"
   end subroutine read_vardata_4d_r4
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_5d_r4(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(4), allocatable, dimension(:,:,:,:,:), intent(inout) :: values
+    real(4), allocatable, dimension(:,:,:,:,:), intent(out) :: values
     include "read_vardata_code_5d.f90"
   end subroutine read_vardata_5d_r4
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_1d_r8(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(8), allocatable, dimension(:), intent(inout) :: values
+    real(8), allocatable, dimension(:), intent(out) :: values
     include "read_vardata_code_1d.f90"
   end subroutine read_vardata_1d_r8
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_2d_r8(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(8), allocatable, dimension(:,:), intent(inout) :: values
+    real(8), allocatable, dimension(:,:), intent(out) :: values
     include "read_vardata_code_2d.f90"
   end subroutine read_vardata_2d_r8
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_3d_r8(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(8), allocatable, dimension(:,:,:), intent(inout) :: values
+    real(8), allocatable, dimension(:,:,:), intent(out) :: values
     include "read_vardata_code_3d.f90"
   end subroutine read_vardata_3d_r8
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_4d_r8(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(8), allocatable, dimension(:,:,:,:), intent(inout) :: values
+    real(8), allocatable, dimension(:,:,:,:), intent(out) :: values
     include "read_vardata_code_4d.f90"
   end subroutine read_vardata_4d_r8
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_5d_r8(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    real(8), allocatable, dimension(:,:,:,:,:), intent(inout) :: values
+    real(8), allocatable, dimension(:,:,:,:,:), intent(out) :: values
     include "read_vardata_code_5d.f90"
   end subroutine read_vardata_5d_r8
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_1d_int(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer, allocatable, dimension(:), intent(inout) :: values
+    integer, allocatable, dimension(:), intent(out) :: values
     include "read_vardata_code_1d.f90"
   end subroutine read_vardata_1d_int
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_2d_int(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer, allocatable, dimension(:,:), intent(inout) :: values
+    integer, allocatable, dimension(:,:), intent(out) :: values
     include "read_vardata_code_2d.f90"
   end subroutine read_vardata_2d_int
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_3d_int(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer, allocatable, dimension(:,:,:), intent(inout) :: values
+    integer, allocatable, dimension(:,:,:), intent(out) :: values
     include "read_vardata_code_3d.f90"
   end subroutine read_vardata_3d_int
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_4d_int(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer, allocatable, dimension(:,:,:,:), intent(inout) :: values
+    integer, allocatable, dimension(:,:,:,:), intent(out) :: values
     include "read_vardata_code_4d.f90"
   end subroutine read_vardata_4d_int
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_5d_int(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer, allocatable, dimension(:,:,:,:,:), intent(inout) :: values
+    integer, allocatable, dimension(:,:,:,:,:), intent(out) :: values
     include "read_vardata_code_5d.f90"
   end subroutine read_vardata_5d_int
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_1d_short(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(2), allocatable, dimension(:), intent(inout) :: values
+    integer(2), allocatable, dimension(:), intent(out) :: values
     include "read_vardata_code_1d.f90"
   end subroutine read_vardata_1d_short
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_2d_short(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(2), allocatable, dimension(:,:), intent(inout) :: values
+    integer(2), allocatable, dimension(:,:), intent(out) :: values
     include "read_vardata_code_2d.f90"
   end subroutine read_vardata_2d_short
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_3d_short(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(2), allocatable, dimension(:,:,:), intent(inout) :: values
+    integer(2), allocatable, dimension(:,:,:), intent(out) :: values
     include "read_vardata_code_3d.f90"
   end subroutine read_vardata_3d_short
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_4d_short(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(2), allocatable, dimension(:,:,:,:), intent(inout) :: values
+    integer(2), allocatable, dimension(:,:,:,:), intent(out) :: values
     include "read_vardata_code_4d.f90"
   end subroutine read_vardata_4d_short
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_5d_short(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(2), allocatable, dimension(:,:,:,:,:), intent(inout) :: values
+    integer(2), allocatable, dimension(:,:,:,:,:), intent(out) :: values
     include "read_vardata_code_5d.f90"
   end subroutine read_vardata_5d_short
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_1d_byte(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(1), allocatable, dimension(:), intent(inout) :: values
+    integer(1), allocatable, dimension(:), intent(out) :: values
     include "read_vardata_code_1d.f90"
   end subroutine read_vardata_1d_byte
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_2d_byte(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(1), allocatable, dimension(:,:), intent(inout) :: values
+    integer(1), allocatable, dimension(:,:), intent(out) :: values
     include "read_vardata_code_2d.f90"
   end subroutine read_vardata_2d_byte
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_3d_byte(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(1), allocatable, dimension(:,:,:), intent(inout) :: values
+    integer(1), allocatable, dimension(:,:,:), intent(out) :: values
     include "read_vardata_code_3d.f90"
   end subroutine read_vardata_3d_byte
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_4d_byte(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(1), allocatable, dimension(:,:,:,:), intent(inout) :: values
+    integer(1), allocatable, dimension(:,:,:,:), intent(out) :: values
     include "read_vardata_code_4d.f90"
   end subroutine read_vardata_4d_byte
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_5d_byte(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    integer(1), allocatable, dimension(:,:,:,:,:), intent(inout) :: values
+    integer(1), allocatable, dimension(:,:,:,:,:), intent(out) :: values
     include "read_vardata_code_5d.f90"
   end subroutine read_vardata_5d_byte
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_1d_char(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    character, allocatable, dimension(:), intent(inout) :: values
+    character, allocatable, dimension(:), intent(out) :: values
     include "read_vardata_code_1d.f90"
   end subroutine read_vardata_1d_char
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_2d_char(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    character, allocatable, dimension(:,:), intent(inout) :: values
+    character, allocatable, dimension(:,:), intent(out) :: values
     include "read_vardata_code_2d.f90"
   end subroutine read_vardata_2d_char
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_3d_char(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    character, allocatable, dimension(:,:,:), intent(inout) :: values
+    character, allocatable, dimension(:,:,:), intent(out) :: values
     include "read_vardata_code_3d.f90"
   end subroutine read_vardata_3d_char
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_4d_char(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    character, allocatable, dimension(:,:,:,:), intent(inout) :: values
+    character, allocatable, dimension(:,:,:,:), intent(out) :: values
     include "read_vardata_code_4d.f90"
   end subroutine read_vardata_4d_char
 
   !> @copydoc module_ncio::read_vardata
   subroutine read_vardata_5d_char(dset, varname, values, nslice, slicedim, ncstart, nccount, errcode)
-    character, allocatable, dimension(:,:,:,:,:), intent(inout) :: values
+    character, allocatable, dimension(:,:,:,:,:), intent(out) :: values
     include "read_vardata_code_5d.f90"
   end subroutine read_vardata_5d_char
 
@@ -1356,67 +1356,67 @@ contains
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_int_scalar(dset, attname, values, varname, errcode)
-    integer, intent(inout) :: values
+    integer, intent(out) :: values
     include "read_scalar_attribute_code.f90"
   end subroutine read_attribute_int_scalar
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_short_scalar(dset, attname, values, varname, errcode)
-    integer(2), intent(inout) :: values
+    integer(2), intent(out) :: values
     include "read_scalar_attribute_code.f90"
   end subroutine read_attribute_short_scalar
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_byte_scalar(dset, attname, values, varname, errcode)
-    integer(1), intent(inout) :: values
+    integer(1), intent(out) :: values
     include "read_scalar_attribute_code.f90"
   end subroutine read_attribute_byte_scalar
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_r4_scalar(dset, attname, values, varname, errcode)
-    real(4), intent(inout) :: values
+    real(4), intent(out) :: values
     include "read_scalar_attribute_code.f90"
   end subroutine read_attribute_r4_scalar
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_r8_scalar(dset, attname, values, varname, errcode)
-    real(8), intent(inout) :: values
+    real(8), intent(out) :: values
     include "read_scalar_attribute_code.f90"
   end subroutine read_attribute_r8_scalar
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_r4_1d(dset, attname, values, varname, errcode)
-    real(4), intent(inout), allocatable, dimension(:) :: values
+    real(4), intent(out), allocatable, dimension(:) :: values
     include "read_attribute_code.f90"
   end subroutine read_attribute_r4_1d
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_r8_1d(dset, attname, values, varname, errcode)
-    real(8), intent(inout), allocatable, dimension(:) :: values
+    real(8), intent(out), allocatable, dimension(:) :: values
     include "read_attribute_code.f90"
   end subroutine read_attribute_r8_1d
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_int_1d(dset, attname, values, varname, errcode)
-    integer, intent(inout), allocatable, dimension(:) :: values
+    integer, intent(out), allocatable, dimension(:) :: values
     include "read_attribute_code.f90"
   end subroutine read_attribute_int_1d
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_short_1d(dset, attname, values, varname, errcode)
-    integer(2), intent(inout), allocatable, dimension(:) :: values
+    integer(2), intent(out), allocatable, dimension(:) :: values
     include "read_attribute_code.f90"
   end subroutine read_attribute_short_1d
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_byte_1d(dset, attname, values, varname, errcode)
-    integer(1), intent(inout), allocatable, dimension(:) :: values
+    integer(1), intent(out), allocatable, dimension(:) :: values
     include "read_attribute_code.f90"
   end subroutine read_attribute_byte_1d
 
   !> @copydoc module_ncio::read_attribute
   subroutine read_attribute_char(dset, attname, values, varname, errcode)
-    character(len=*), intent(inout) :: values
+    character(len=*), intent(out) :: values
     include "read_scalar_attribute_code.f90"
   end subroutine read_attribute_char
 

@@ -64,7 +64,6 @@
      endif
   endif
   ! allocate/deallocate values
-  if (allocated(values)) deallocate(values)
   if (present(ncstart) .and. present(nccount)) then
      allocate(values(nccount(1),nccount(2),nccount(3),nccount(4)))
      start(1)=ncstart(1); count(1)=nccount(1)
@@ -86,6 +85,7 @@
   end if
   ncerr = nf90_get_var(dset%ncid, dset%variables(nvar)%varid, values,&
                        start=start, count=count)
+  deallocate(start,count)
   ! err check
   if (return_errcode) then
      call nccheck(ncerr,halt=.false.)
