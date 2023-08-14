@@ -10,7 +10,7 @@
   integer, intent(in), optional :: nccount(1)
   integer, intent(out), optional :: errcode
   integer ncerr, nvar, n, nd, dimlen, ncount
-  integer, allocatable, dimension(:) :: start, count
+  integer, allocatable, dimension(:) :: start, icount
   logical return_errcode
   ! check if use the errcode
   if(present(errcode)) then
@@ -26,9 +26,9 @@
      ncount = 1
   endif
   nvar = get_nvar(dset,varname)
-  allocate(start(dset%variables(nvar)%ndims),count(dset%variables(nvar)%ndims))
+  allocate(start(dset%variables(nvar)%ndims),icount(dset%variables(nvar)%ndims))
   start(:) = 1
-  count(:) = 1
+  icount(:) = 1
   if (present(slicedim)) then
      nd = slicedim
   else
@@ -39,13 +39,13 @@
   do n=1,dset%variables(nvar)%ndims
      if (present(slicedim) .and. n == nd) then
         start(n) = ncount
-        count(n) = 1
+        icount(n) = 1
      else if (.not. present(slicedim) .and. n == nd .and. dset%variables(nvar)%ndims == 2) then
         start(n) = ncount
-        count(n) = 1
+        icount(n) = 1
      else
         start(n) = 1
-        count(n) = dset%variables(nvar)%dimlens(n)
+        icount(n) = dset%variables(nvar)%dimlens(n)
         dimlen = dset%variables(nvar)%dimlens(n)
      end if
   end do
@@ -62,9 +62,9 @@
   ! allocate/deallocate values
   if (present(ncstart) .and. present(nccount)) then
      allocate(values(nccount(1)))
-     start(1)=ncstart(1); count(1)=nccount(1)
+     start(1)=ncstart(1); icount(1)=nccount(1)
      if (dset%variables(nvar)%ndims == 2) then
-        start(2)=1; count(2)=1
+        start(2)=1; icount(2)=1
      end if
   else
      if (dset%variables(nvar)%ndims == 2) then
@@ -74,8 +74,8 @@
      end if
   end if
   ncerr = nf90_get_var(dset%ncid, dset%variables(nvar)%varid, values,&
-                       start=start, count=count)
-  deallocate(start,count)
+                       start=start, count=icount)
+  deallocate(start,icount)
   !err check
   if (return_errcode) then
      call nccheck(ncerr,halt=.false.)

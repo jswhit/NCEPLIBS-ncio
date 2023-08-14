@@ -4,7 +4,7 @@
   !! @author Jeff Whitaker, Cory Martin
   type(Dataset), intent(in) :: dset
   character(len=*), intent(in) :: varname
-  integer, allocatable, dimension(:) :: start, count
+  integer, allocatable, dimension(:) :: start, icount
   integer, intent(out), optional :: errcode
   integer, intent(in), optional :: nslice
   integer, intent(in), optional :: slicedim
@@ -45,21 +45,21 @@
   n4 = dset%variables(nvar)%dimlens(4)
   n5 = dset%variables(nvar)%dimlens(5)
   ! allocate/deallocate values
-  allocate(start(dset%variables(nvar)%ndims),count(dset%variables(nvar)%ndims))
-  start(:) = 1; count(1)=n1; count(2)=n2; count(3)=n3; count(4)=n4; count(5)=n5
+  allocate(start(dset%variables(nvar)%ndims),icount(dset%variables(nvar)%ndims))
+  start(:) = 1; icount(1)=n1; icount(2)=n2; icount(3)=n3; icount(4)=n4; icount(5)=n5
   if (present(ncstart) .and. present(nccount)) then
-     start(1)=ncstart(1); count(1)=nccount(1)
-     start(2)=ncstart(2); count(2)=nccount(2)
-     start(3)=ncstart(3); count(3)=nccount(3)
-     start(4)=ncstart(4); count(4)=nccount(4)
-     start(5)=ncstart(5); count(5)=nccount(5)
+     start(1)=ncstart(1); icount(1)=nccount(1)
+     start(2)=ncstart(2); icount(2)=nccount(2)
+     start(3)=ncstart(3); icount(3)=nccount(3)
+     start(4)=ncstart(4); icount(4)=nccount(4)
+     start(5)=ncstart(5); icount(5)=nccount(5)
   else if (present(nslice)) then
-     start(nd)=ncount; count(nd)=1
+     start(nd)=ncount; icount(nd)=1
   endif
-  allocate(values(count(1),count(2),count(3),count(4),count(5)))
+  allocate(values(icount(1),icount(2),icount(3),icount(4),icount(5)))
   ncerr = nf90_get_var(dset%ncid, dset%variables(nvar)%varid, values,&
-                       start,count)
-  deallocate(start,count)
+                       start,icount)
+  deallocate(start,icount)
   ! err check
   if (return_errcode) then
      call nccheck(ncerr,halt=.false.)

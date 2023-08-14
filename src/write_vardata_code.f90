@@ -8,7 +8,7 @@
   integer, intent(in), optional :: slicedim
   integer, intent(out), optional :: errcode
   integer ncerr, nvar, ncount, nd, n, ndim
-  integer, allocatable, dimension(:) :: start, count, varshape
+  integer, allocatable, dimension(:) :: start, icount, varshape
   logical is_slice
   logical return_errcode
   ! check if use the errcode
@@ -28,10 +28,10 @@
   endif
   ! define variable name and allocate variable
   nvar = get_nvar(dset,varname)
-  allocate(start(dset%variables(nvar)%ndims),count(dset%variables(nvar)%ndims))
+  allocate(start(dset%variables(nvar)%ndims),icount(dset%variables(nvar)%ndims))
   allocate(varshape(dset%variables(nvar)%ndims))
   start(:) = 1
-  count(:) = 1
+  icount(:) = 1
   if (is_slice) then
      nd = slicedim
   else
@@ -41,14 +41,14 @@
      ndim = dset%variables(nvar)%dimids(n)
      if (is_slice .and. n == nd) then
         start(n) = ncount
-        count(n) = 1
+        icount(n) = 1
      else if (n == nd .and. dset%dimensions(ndim)%isunlimited) then
         start(n) = ncount
         varshape = shape(values)
-        count(n) = varshape(n)
+        icount(n) = varshape(n)
      else
         start(n) = 1
-        count(n) = dset%variables(nvar)%dimlens(n)
+        icount(n) = dset%variables(nvar)%dimlens(n)
      end if
   end do
   ! write operations on a parallel file system are performed collectively
@@ -56,7 +56,7 @@
   if (is_slice) then
      if (dset%variables(nvar)%ndims > 1) then
         ncerr = nf90_put_var(dset%ncid, dset%variables(nvar)%varid,values, &
-                             start=start,count=count)
+                             start=start,count=icount)
      else if (dset%variables(nvar)%ndims == 1) then
         if (return_errcode) then
            errcode = -1
@@ -71,8 +71,9 @@
           start=ncstart, count=nccount)
   else
      ncerr = nf90_put_var(dset%ncid, dset%variables(nvar)%varid, values, &
-          start=start, count=count)
+          start=start, count=icount)
   endif
+  deallocate(start,icount,varshape)
   if (return_errcode) then
      call nccheck(ncerr,halt=.false.)
      errcode=ncerr

@@ -10,7 +10,7 @@
   integer, intent(in), optional :: nccount(2)
   integer, intent(out), optional :: errcode
   integer ncerr, nvar, n, nd, ndim, ncount
-  integer, allocatable, dimension(:) :: start, count
+  integer, allocatable, dimension(:) :: start, icount
   integer :: dimlens(2)
   logical return_errcode
   ! check if use errcode 
@@ -27,9 +27,9 @@
      ncount = 1
   endif
   nvar = get_nvar(dset,varname)
-  allocate(start(dset%variables(nvar)%ndims),count(dset%variables(nvar)%ndims))
+  allocate(start(dset%variables(nvar)%ndims),icount(dset%variables(nvar)%ndims))
   start(:) = 1
-  count(:) = 1
+  icount(:) = 1
   dimlens(:) = 1
   if (present(slicedim)) then
      nd = slicedim
@@ -42,13 +42,13 @@
   do n=1,dset%variables(nvar)%ndims
      if (present(slicedim) .and. n == nd) then
         start(n) = ncount
-        count(n) = 1
+        icount(n) = 1
      else if (.not. present(slicedim) .and. n == nd .and. dset%variables(nvar)%ndims == 3) then
         start(n) = ncount
-        count(n) = 1
+        icount(n) = 1
      else
         start(n) = 1
-        count(n) = dset%variables(nvar)%dimlens(n)
+        icount(n) = dset%variables(nvar)%dimlens(n)
         dimlens(ndim) = dset%variables(nvar)%dimlens(n)
         ndim = ndim + 1
      end if
@@ -67,10 +67,10 @@
   ! allocate/deallocate values
   if (present(ncstart) .and. present(nccount)) then
      allocate(values(nccount(1),nccount(2)))
-     start(1)=ncstart(1); count(1)=nccount(1)
-     start(2)=ncstart(2); count(2)=nccount(2)
+     start(1)=ncstart(1); icount(1)=nccount(1)
+     start(2)=ncstart(2); icount(2)=nccount(2)
      if (dset%variables(nvar)%ndims == 3) then
-        start(3)=1; count(3)=1
+        start(3)=1; icount(3)=1
      end if
   else
      if (dset%variables(nvar)%ndims == 3) then
@@ -80,8 +80,8 @@
      end if
   end if
   ncerr = nf90_get_var(dset%ncid, dset%variables(nvar)%varid, values,&
-                       start=start, count=count)
-  deallocate(start,count)
+                       start=start, count=icount)
+  deallocate(start,icount)
   ! err check
   if (return_errcode) then
      call nccheck(ncerr,halt=.false.)
